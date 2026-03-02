@@ -45,29 +45,38 @@ class SalesDashboard {
 
         container.innerHTML = this.teams.map((team, index) => {
             const position = index + 1;
-            return this.createTeamCard(team, position);
+            const progressWidth = (team.vgv / maxVGV) * 100;
+            return this.createTeamCard(team, position, progressWidth);
         }).join('');
 
         // Aplicar gradientes baseados no VGV
         this.applyVGVGradients(maxVGV);
+        
+        // Animar as barras de progresso
+        this.animateProgressBars();
     }
 
-    createTeamCard(team, position) {
+    createTeamCard(team, position, progressWidth) {
         const positionClass = this.getPositionClass(position);
         const formattedVGV = this.formatCurrency(team.vgv);
 
         return `
-            <div class="team-card ${positionClass}" data-vgv="${team.vgv}">
+            <div class="team-card ${positionClass}" data-vgv="${team.vgv}" data-progress="${progressWidth}">
                 <div class="position-badge">#${position}</div>
                 
                 <img src="${team.managerPhoto}" 
                      alt="${team.managerName}" 
                      class="manager-avatar"
-                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjUiIGhlaWdodD0iNjUiIHZpZXdCb3g9IjAgMCA2NSA2NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzIuNSIgY3k9IjMyLjUiIHI9IjMyLjUiIGZpbGw9IiNGRjZBMDAiLz4KPHN2ZyB4PSIxNSIgeT0iMTUiIHdpZHRoPSIzNSIgaGVpZ2h0PSIzNSIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjZmZmIj4KPHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPgo8L3N2Zz4KPC9zdmc+'">
+                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTMwIiBoZWlnaHQ9IjEzMCIgdmlld0JveD0iMCAwIDEzMCAxMzAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxjaXJjbGUgY3g9IjY1IiBjeT0iNjUiIHI9IjY1IiBmaWxsPSIjRkY2QTAwIi8+CjxzdmcgeD0iMzAiIHk9IjMwIiB3aWR0aD0iNzAiIGhlaWdodD0iNzAiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI2ZmZiI+CjxwYXRoIGQ9Ik0xMiAxMmMyLjIxIDAgNC0xLjc5IDQtNHMtMS43OS00LTQtNC00IDEuNzktNCA0IDEuNzkgNCA0IDR6bTAgMmMtMi42NyAwLTggMS4zNC04IDR2MmgxNnYtMmMwLTIuNjYtNS4zMy00LTgtNHoiLz4KPC9zdmc+Cjwvc3ZnPg=='">
                 
                 <div class="team-info">
                     <h3 class="team-name">${team.name}</h3>
                     <p class="manager-name">${team.managerName}</p>
+                    
+                    <!-- BARRA DE PROGRESSO aqui -->
+                    <div class="progress-container">
+                        <div class="progress-bar" data-width="${progressWidth}"></div>
+                    </div>
                 </div>
                 
                 <div class="performance-section">
@@ -116,6 +125,19 @@ class SalesDashboard {
             setTimeout(() => {
                 card.style.background = gradientColor;
             }, index * 200);
+        });
+    }
+
+    animateProgressBars() {
+        const progressBars = document.querySelectorAll('.progress-bar');
+        
+        progressBars.forEach((bar, index) => {
+            const width = bar.getAttribute('data-width');
+            
+            // Anima a barra com delay
+            setTimeout(() => {
+                bar.style.width = width + '%';
+            }, (index * 300) + 500); // Delay escalonado
         });
     }
 
