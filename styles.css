@@ -8,22 +8,21 @@ body {
     font-family: 'Inter', sans-serif;
     background: linear-gradient(135deg, #0B1F3A 0%, #1a2f4a 100%);
     color: #ffffff;
-    overflow-x: hidden;
-    min-height: 100vh;
-    overflow-y: hidden; /* Remove scroll vertical */
+    overflow: hidden; /* Remove qualquer scroll */
+    height: 100vh;
 }
 
 .dashboard-container {
     width: 100%;
     height: 100vh;
-    padding: 25px 40px; /* Reduzido de 40px */
+    padding: 20px 35px; /* Ainda menor */
     display: flex;
     flex-direction: column;
 }
 
-/* Header Styles */
+/* Header Styles - Mais compacto */
 .dashboard-header {
-    margin-bottom: 30px; /* Reduzido de 50px */
+    margin-bottom: 20px; /* Reduzido de 30px */
     flex-shrink: 0;
 }
 
@@ -31,36 +30,38 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px; /* Reduzido de 20px */
+    margin-bottom: 10px; /* Reduzido de 15px */
 }
 
 .company-name {
-    font-size: 2.8rem; /* Reduzido de 3.2rem */
+    font-size: 2.4rem; /* Reduzido de 2.8rem */
     font-weight: 700;
     color: #FF6A00;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     text-shadow: 0 0 20px rgba(255, 106, 0, 0.3);
+    line-height: 1;
 }
 
 .dashboard-title {
-    font-size: 1.5rem; /* Reduzido de 1.8rem */
+    font-size: 1.3rem; /* Reduzido de 1.5rem */
     font-weight: 400;
     color: #B8D4F0;
-    margin-top: 5px; /* Reduzido de 8px */
-    letter-spacing: 1px;
+    margin-top: 3px; /* Reduzido de 5px */
+    letter-spacing: 0.8px;
+    line-height: 1;
 }
 
 .last-updated {
-    font-size: 1rem; /* Reduzido de 1.1rem */
+    font-size: 0.95rem; /* Reduzido de 1rem */
     color: #8FA8C4;
     font-weight: 300;
 }
 
 .header-divider {
-    height: 3px;
+    height: 2px; /* Reduzido de 3px */
     background: linear-gradient(90deg, #FF6A00 0%, rgba(255, 106, 0, 0.3) 100%);
-    border-radius: 2px;
-    box-shadow: 0 0 10px rgba(255, 106, 0, 0.4);
+    border-radius: 1px;
+    box-shadow: 0 0 8px rgba(255, 106, 0, 0.4);
 }
 
 /* Main Content */
@@ -72,76 +73,76 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    min-height: 0; /* Importante para flex */
 }
 
 .ranking-container {
     display: flex;
     flex-direction: column;
-    gap: 12px; /* Reduzido de 20px */
+    gap: 8px; /* Reduzido de 12px */
     flex: 1;
     overflow: hidden;
-    padding-bottom: 10px;
+    justify-content: space-between; /* Distribui igualmente */
 }
 
-/* Team Card Styles */
+/* Team Card Styles - Muito mais compacto */
 .team-card {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px; /* Reduzido de 16px */
-    padding: 18px 25px; /* Reduzido de 30px */
+    border-radius: 10px; /* Reduzido de 12px */
+    padding: 12px 20px; /* Reduzido de 18px 25px */
     display: flex;
     align-items: center;
     position: relative;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(10px);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3); /* Reduzido */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     flex: 1;
-    min-height: 85px; /* Altura mínima controlada */
-    max-height: 95px; /* Altura máxima controlada */
+    height: 70px; /* Altura fixa menor */
 }
 
 .team-card:hover {
-    transform: translateY(-1px); /* Reduzido de -2px */
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* Position Badges */
+/* Position Badges - Menores */
 .position-badge {
     position: absolute;
-    top: -8px; /* Reduzido de -10px */
-    right: 25px; /* Reduzido de 30px */
-    width: 32px; /* Reduzido de 40px */
-    height: 32px; /* Reduzido de 40px */
+    top: -6px; /* Reduzido de -8px */
+    right: 20px; /* Reduzido de 25px */
+    width: 28px; /* Reduzido de 32px */
+    height: 28px; /* Reduzido de 32px */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 1rem; /* Reduzido de 1.2rem */
+    font-size: 0.9rem; /* Reduzido de 1rem */
     color: #0B1F3A;
 }
 
-/* First Place */
+/* First Place - Menos destaque */
 .team-card.first-place {
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 106, 0, 0.1) 100%);
-    border: 2px solid rgba(255, 215, 0, 0.3);
-    transform: scale(1.01); /* Reduzido de 1.02 */
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.2), 0 8px 32px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.12) 0%, rgba(255, 106, 0, 0.08) 100%);
+    border: 2px solid rgba(255, 215, 0, 0.25);
+    transform: scale(1.005); /* Muito sutil */
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.15), 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 .team-card.first-place .position-badge {
     background: linear-gradient(135deg, #FFD700, #FFA500);
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
 }
 
 .team-card.first-place .manager-avatar {
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
 }
 
 /* Second Place */
 .team-card.second-place {
-    background: linear-gradient(135deg, rgba(192, 192, 192, 0.15) 0%, rgba(255, 106, 0, 0.05) 100%);
-    border: 2px solid rgba(192, 192, 192, 0.2);
+    background: linear-gradient(135deg, rgba(192, 192, 192, 0.12) 0%, rgba(255, 106, 0, 0.04) 100%);
+    border: 2px solid rgba(192, 192, 192, 0.15);
 }
 
 .team-card.second-place .position-badge {
@@ -150,83 +151,83 @@ body {
 
 /* Third Place */
 .team-card.third-place {
-    background: linear-gradient(135deg, rgba(205, 127, 50, 0.15) 0%, rgba(255, 106, 0, 0.05) 100%);
-    border: 2px solid rgba(205, 127, 50, 0.2);
+    background: linear-gradient(135deg, rgba(205, 127, 50, 0.12) 0%, rgba(255, 106, 0, 0.04) 100%);
+    border: 2px solid rgba(205, 127, 50, 0.15);
 }
 
 .team-card.third-place .position-badge {
     background: linear-gradient(135deg, #CD7F32, #B8860B);
 }
 
-/* Avatar */
+/* Avatar - Menor */
 .manager-avatar {
-    width: 65px; /* Reduzido de 80px */
-    height: 65px; /* Reduzido de 80px */
+    width: 50px; /* Reduzido de 65px */
+    height: 50px; /* Reduzido de 65px */
     border-radius: 50%;
-    border: 3px solid #FF6A00;
+    border: 2px solid #FF6A00; /* Reduzido de 3px */
     object-fit: cover;
-    margin-right: 25px; /* Reduzido de 30px */
+    margin-right: 18px; /* Reduzido de 25px */
     transition: all 0.3s ease;
-    box-shadow: 0 0 12px rgba(255, 106, 0, 0.3);
+    box-shadow: 0 0 10px rgba(255, 106, 0, 0.3);
     flex-shrink: 0;
 }
 
-/* Team Info */
+/* Team Info - Compacto */
 .team-info {
     flex: 1;
-    margin-right: 25px; /* Reduzido de 30px */
-    min-width: 0; /* Para permitir text overflow */
+    margin-right: 20px; /* Reduzido de 25px */
+    min-width: 0;
 }
 
 .team-name {
-    font-size: 1.6rem; /* Reduzido de 2rem */
+    font-size: 1.35rem; /* Reduzido de 1.6rem */
     font-weight: 600;
     color: #ffffff;
-    margin-bottom: 4px; /* Reduzido de 8px */
-    letter-spacing: 0.5px;
-    line-height: 1.2;
+    margin-bottom: 2px; /* Reduzido de 4px */
+    letter-spacing: 0.3px;
+    line-height: 1.1;
 }
 
 .manager-name {
-    font-size: 1rem; /* Reduzido de 1.2rem */
+    font-size: 0.9rem; /* Reduzido de 1rem */
     color: #B8D4F0;
     font-weight: 400;
-    line-height: 1.2;
+    line-height: 1.1;
 }
 
-/* Performance Section */
+/* Performance Section - Compacto */
 .performance-section {
     flex: 1;
-    max-width: 350px; /* Reduzido de 400px */
-    min-width: 280px;
+    max-width: 300px; /* Reduzido de 350px */
+    min-width: 250px;
 }
 
 .vgv-value {
-    font-size: 1.9rem; /* Reduzido de 2.4rem */
+    font-size: 1.6rem; /* Reduzido de 1.9rem */
     font-weight: 700;
     color: #FF6A00;
-    margin-bottom: 10px; /* Reduzido de 15px */
+    margin-bottom: 8px; /* Reduzido de 10px */
     text-align: right;
-    text-shadow: 0 0 8px rgba(255, 106, 0, 0.3);
-    line-height: 1.2;
+    text-shadow: 0 0 6px rgba(255, 106, 0, 0.3);
+    line-height: 1.1;
 }
 
-/* Progress Bar */
+/* Progress Bar - Menor */
 .progress-container {
     position: relative;
-    height: 10px; /* Reduzido de 12px */
+    height: 8px; /* Reduzido de 10px */
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 5px;
+    border-radius: 4px;
     overflow: hidden;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .progress-bar {
     height: 100%;
     background: linear-gradient(90deg, #FF6A00, #FF8C42);
-    border-radius: 5px;
+    border-radius: 4px;
     transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 8px rgba(255, 106, 0, 0.4);
+    box-shadow: 0 0 6px rgba(255, 106, 0, 0.4);
     position: relative;
 }
 
@@ -251,20 +252,20 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px;
-    font-size: 1.5rem;
+    height: 150px;
+    font-size: 1.3rem;
     color: #B8D4F0;
 }
 
 .loading::after {
     content: '';
-    width: 40px;
-    height: 40px;
-    border: 4px solid rgba(255, 106, 0, 0.3);
-    border-top: 4px solid #FF6A00;
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(255, 106, 0, 0.3);
+    border-top: 3px solid #FF6A00;
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    margin-left: 20px;
+    margin-left: 15px;
 }
 
 @keyframes spin {
@@ -272,26 +273,31 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* Responsive Design para TV 1920x1080 */
-@media (max-width: 1600px) {
-    .company-name { font-size: 2.4rem; }
-    .dashboard-title { font-size: 1.3rem; }
-    .team-name { font-size: 1.4rem; }
-    .vgv-value { font-size: 1.7rem; }
-    .manager-avatar { width: 60px; height: 60px; }
+/* Media Queries para garantir que funcione em qualquer tela */
+@media (max-height: 1000px) {
+    .dashboard-container { padding: 15px 30px; }
+    .dashboard-header { margin-bottom: 15px; }
+    .ranking-container { gap: 6px; }
+    .team-card { 
+        height: 65px;
+        padding: 10px 18px;
+    }
+    .company-name { font-size: 2.2rem; }
+    .team-name { font-size: 1.25rem; }
+    .vgv-value { font-size: 1.5rem; }
+    .manager-avatar { width: 45px; height: 45px; }
 }
 
 @media (max-height: 900px) {
-    .dashboard-container { padding: 20px 35px; }
-    .dashboard-header { margin-bottom: 20px; }
-    .ranking-container { gap: 8px; }
+    .dashboard-container { padding: 12px 25px; }
+    .dashboard-header { margin-bottom: 12px; }
+    .ranking-container { gap: 4px; }
     .team-card { 
-        padding: 15px 20px; 
-        min-height: 75px;
-        max-height: 85px;
+        height: 60px;
+        padding: 8px 15px;
     }
-    .company-name { font-size: 2.2rem; }
-    .team-name { font-size: 1.4rem; }
-    .vgv-value { font-size: 1.6rem; }
-    .manager-avatar { width: 55px; height: 55px; }
+    .company-name { font-size: 2rem; }
+    .team-name { font-size: 1.2rem; }
+    .vgv-value { font-size: 1.4rem; }
+    .manager-avatar { width: 42px; height: 42px; }
 }
