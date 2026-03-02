@@ -3,30 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Imobiliária - Sales Performance Ranking</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Ranking de Vendas IVAN</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- Header Section -->
         <header class="dashboard-header">
             <div class="header-content">
-                <div class="company-info">
-                    <h1 class="company-name">PREMIUM IMOBILIÁRIA</h1>
-                    <h2 class="dashboard-title">Sales Performance Ranking</h2>
+                <div class="header-logo-section">
+                    <img src="https://i.ibb.co/6cpX4gQQ/LOGO-IVAN-PNG.png" alt="Logo IVAN" class="company-logo">
+                    <div class="header-text">
+                        <h1 class="company-name">RANKING DE VENDAS IVAN</h1>
+                        <p class="dashboard-title">Ranking de Vendas - VGV</p>
+                    </div>
                 </div>
-                <div class="last-updated">
-                    <span id="lastUpdated">Última atualização: agora</span>
-                </div>
+                <p id="lastUpdated" class="last-updated">Última atualização: agora</p>
             </div>
             <div class="header-divider"></div>
         </header>
 
-        <!-- Main Content -->
         <main class="dashboard-main">
-            <div class="ranking-container" id="rankingContainer">
-                <!-- Team cards will be dynamically inserted here -->
+            <div id="rankingContainer" class="ranking-container">
+                <div class="loading">Carregando dados...</div>
             </div>
         </main>
     </div>
