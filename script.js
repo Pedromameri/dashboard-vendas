@@ -44,34 +44,34 @@ class SalesDashboard {
             return;
         }
 
-        // Calculate max VGV for progress bar scaling
+        // Calculate max VGV for progress scaling
         const maxVGV = Math.max(...this.teams.map(team => team.vgv));
 
         container.innerHTML = this.teams.map((team, index) => {
             const position = index + 1;
-            const progressPercentage = (team.vgv / maxVGV) * 100;
+            const fillPercentage = (team.vgv / maxVGV) * 100;
             
-            return this.createTeamCard(team, position, progressPercentage);
+            return this.createTeamCard(team, position, fillPercentage);
         }).join('');
 
-        // Animate progress bars after rendering
+        // Animate card backgrounds after rendering
         setTimeout(() => {
-            this.animateProgressBars();
+            this.animateCardBackgrounds();
         }, 100);
     }
 
-    createTeamCard(team, position, progressPercentage) {
+    createTeamCard(team, position, fillPercentage) {
         const positionClass = this.getPositionClass(position);
         const formattedVGV = this.formatCurrency(team.vgv);
 
         return `
-            <div class="team-card ${positionClass}" data-team="${team.name}">
+            <div class="team-card ${positionClass}" data-team="${team.name}" data-fill="${fillPercentage}">
                 <div class="position-badge">#${position}</div>
                 
                 <img src="${team.managerPhoto}" 
                      alt="${team.managerName}" 
                      class="manager-avatar"
-                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNDAiIGN5PSI0MCIgcj0iNDAiIGZpbGw9IiNGRjZBMDAiLz4KPHN2ZyB4PSIyMCIgeT0iMjAiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjZmZmIj4KPHA+VXNlcjwvcD4KPC9zdmc+Cjwvc3ZnPgo='">
+                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAiIGhlaWdodD0iNzAiIHZpZXdCb3g9IjAgMCA3MCA3MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzUiIGN5PSIzNSIgcj0iMzUiIGZpbGw9IiNGRjZBMDAiLz4KPHN2ZyB4PSIxNSIgeT0iMTUiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjZmZmIj4KPHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPgo8L3N2Zz4KPC9zdmc+'">
                 
                 <div class="team-info">
                     <h3 class="team-name">${team.name}</h3>
@@ -80,9 +80,6 @@ class SalesDashboard {
                 
                 <div class="performance-section">
                     <div class="vgv-value">${formattedVGV}</div>
-                    <div class="progress-container">
-                        <div class="progress-bar" data-width="${progressPercentage}"></div>
-                    </div>
                 </div>
             </div>
         `;
@@ -106,17 +103,54 @@ class SalesDashboard {
         }).format(value);
     }
 
-    animateProgressBars() {
-        const progressBars = document.querySelectorAll('.progress-bar');
+    animateCardBackgrounds() {
+        const teamCards = document.querySelectorAll('.team-card');
         
-        progressBars.forEach((bar, index) => {
-            const targetWidth = bar.getAttribute('data-width');
+        teamCards.forEach((card, index) => {
+            const fillPercentage = card.getAttribute('data-fill');
             
             // Stagger animation for visual appeal
             setTimeout(() => {
-                bar.style.width = targetWidth + '%';
+                // Anima o fundo do card (::before)
+                card.style.setProperty('--fill-width', fillPercentage + '%');
+                
+                // Aplica a animação via CSS custom property
+                const beforeElement = window.getComputedStyle(card, '::before');
+                card.style.setProperty('--fill-width', fillPercentage + '%');
+                
+                // Força a animação do ::before
+                requestAnimationFrame(() => {
+                    card.style.setProperty('--dynamic-width', fillPercentage + '%');
+                });
+                
             }, index * 150);
         });
+
+        // Aplica a largura dinamicamente
+        setTimeout(() => {
+            teamCards.forEach(card => {
+                const fillPercentage = card.getAttribute('data-fill');
+                card.style.setProperty('--fill-width', fillPercentage + '%');
+                
+                // Atualiza o ::before via JavaScript
+                const styleSheet = document.styleSheets[0];
+                const cardSelector = `.team-card[data-team="${card.dataset.team}"]::before`;
+                
+                // Remove regra anterior se existir
+                for (let i = styleSheet.cssRules.length - 1; i >= 0; i--) {
+                    if (styleSheet.cssRules[i].selectorText === cardSelector) {
+                        styleSheet.deleteRule(i);
+                    }
+                }
+                
+                // Adiciona nova regra
+                styleSheet.insertRule(`
+                    ${cardSelector} {
+                        width: ${fillPercentage}% !important;
+                    }
+                `, styleSheet.cssRules.length);
+            });
+        }, 500);
     }
 
     updateLastUpdatedTime() {
