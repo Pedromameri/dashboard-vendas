@@ -20,7 +20,7 @@ body {
     flex-direction: column;
 }
 
-/* Header Styles */
+/* Header Styles com LOGO */
 .dashboard-header {
     margin-bottom: 20px;
     flex-shrink: 0;
@@ -33,6 +33,24 @@ body {
     margin-bottom: 10px;
 }
 
+.header-logo-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.company-logo {
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(255, 106, 0, 0.3));
+}
+
+.header-text {
+    display: flex;
+    flex-direction: column;
+}
+
 .company-name {
     font-size: 2.4rem;
     font-weight: 700;
@@ -40,13 +58,13 @@ body {
     letter-spacing: 1.5px;
     text-shadow: 0 0 20px rgba(255, 106, 0, 0.3);
     line-height: 1;
+    margin-bottom: 5px;
 }
 
 .dashboard-title {
     font-size: 1.3rem;
     font-weight: 400;
     color: #B8D4F0;
-    margin-top: 3px;
     letter-spacing: 0.8px;
     line-height: 1;
 }
@@ -90,14 +108,14 @@ body {
     position: relative;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 10px;
-    padding: 15px 20px; /* Aumentado para acomodar barra */
+    padding: 15px 20px;
     display: flex;
     align-items: center;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     flex: 1;
-    height: 90px; /* Aumentado de 70px para 90px */
+    height: 90px;
     overflow: hidden;
     background: linear-gradient(90deg, rgba(255, 106, 0, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
 }
@@ -157,14 +175,14 @@ body {
     background: linear-gradient(135deg, #CD7F32, #B8860B);
 }
 
-/* Avatar DOBRADO como você pediu */
+/* Avatar */
 .manager-avatar {
-    width: 130px; /* DOBRADO de 65px */
-    height: 130px; /* DOBRADO de 65px */
+    width: 130px;
+    height: 130px;
     border-radius: 50%;
-    border: 3px solid #FF6A00; /* Aumentei a borda também */
+    border: 3px solid #FF6A00;
     object-fit: cover;
-    margin-right: 25px; /* Aumentei o espaçamento */
+    margin-right: 25px;
     transition: all 0.3s ease;
     box-shadow: 0 0 15px rgba(255, 106, 0, 0.3);
     flex-shrink: 0;
@@ -185,22 +203,22 @@ body {
 }
 
 .team-name {
-    font-size: 2.7rem; /* DOBRADO de 1.35rem */
+    font-size: 2.7rem;
     font-weight: 600;
     color: #ffffff;
-    margin-bottom: 8px; /* Aumentei para acomodar barra */
+    margin-bottom: 8px;
     letter-spacing: 0.5px;
     line-height: 1.1;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .manager-name {
-    font-size: 1.8rem; /* DOBRADO de 0.9rem */
+    font-size: 1.8rem;
     color: #B8D4F0;
     font-weight: 400;
     line-height: 1.2;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    margin-bottom: 8px; /* Espaço para a barra */
+    margin-bottom: 8px;
 }
 
 /* BARRA DE PROGRESSO abaixo do nome do gestor */
@@ -211,7 +229,7 @@ body {
     border-radius: 4px;
     overflow: hidden;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-    width: 100%; /* Vai até o final do card */
+    width: 100%;
 }
 
 .progress-bar {
@@ -221,7 +239,7 @@ body {
     transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 0 6px rgba(255, 106, 0, 0.4);
     position: relative;
-    width: 0%; /* Será definido pelo JavaScript */
+    width: 0%;
 }
 
 .progress-bar::after {
@@ -250,7 +268,7 @@ body {
 }
 
 .vgv-value {
-    font-size: 1.8rem; /* Aumentei um pouco */
+    font-size: 1.8rem;
     font-weight: 700;
     color: #FF6A00;
     text-shadow: 0 0 8px rgba(255, 106, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.5);
@@ -296,6 +314,7 @@ body {
     .manager-name { font-size: 1.6rem; }
     .vgv-value { font-size: 1.6rem; }
     .manager-avatar { width: 120px; height: 120px; }
+    .company-logo { height: 60px; }
 }
 
 @media (max-height: 900px) {
@@ -310,4 +329,5 @@ body {
     .manager-name { font-size: 1.4rem; }
     .vgv-value { font-size: 1.5rem; }
     .manager-avatar { width: 110px; height: 110px; }
+    .company-logo { height: 50px; }
 }
