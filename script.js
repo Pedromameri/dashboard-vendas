@@ -9,13 +9,11 @@ class SalesDashboard {
         this.loadData();
         this.updateLastUpdatedTime();
         
-        // Auto-refresh every 30 seconds
         setInterval(() => {
             this.loadData();
             this.updateLastUpdatedTime();
         }, 30000);
 
-        // Update time display every minute
         setInterval(() => {
             this.updateLastUpdatedTime();
         }, 60000);
@@ -26,7 +24,6 @@ class SalesDashboard {
             const response = await fetch('data.json');
             const data = await response.json();
             
-            // Sort teams by VGV (highest first)
             this.teams = data.teams.sort((a, b) => b.vgv - a.vgv);
             
             this.renderRanking();
@@ -44,34 +41,29 @@ class SalesDashboard {
             return;
         }
 
-        // Calculate max VGV for progress scaling
         const maxVGV = Math.max(...this.teams.map(team => team.vgv));
 
         container.innerHTML = this.teams.map((team, index) => {
             const position = index + 1;
-            const fillPercentage = (team.vgv / maxVGV) * 100;
-            
-            return this.createTeamCard(team, position, fillPercentage);
+            return this.createTeamCard(team, position);
         }).join('');
 
-        // Animate card backgrounds after rendering
-        setTimeout(() => {
-            this.animateCardBackgrounds();
-        }, 100);
+        // Aplicar gradientes baseados no VGV
+        this.applyVGVGradients(maxVGV);
     }
 
-    createTeamCard(team, position, fillPercentage) {
+    createTeamCard(team, position) {
         const positionClass = this.getPositionClass(position);
         const formattedVGV = this.formatCurrency(team.vgv);
 
         return `
-            <div class="team-card ${positionClass}" data-team="${team.name}" data-fill="${fillPercentage}">
+            <div class="team-card ${positionClass}" data-vgv="${team.vgv}">
                 <div class="position-badge">#${position}</div>
                 
                 <img src="${team.managerPhoto}" 
                      alt="${team.managerName}" 
                      class="manager-avatar"
-                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzAiIGhlaWdodD0iNzAiIHZpZXdCb3g9IjAgMCA3MCA3MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzUiIGN5PSIzNSIgcj0iMzUiIGZpbGw9IiNGRjZBMDAiLz4KPHN2ZyB4PSIxNSIgeT0iMTUiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjZmZmIj4KPHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPgo8L3N2Zz4KPC9zdmc+'">
+                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjUiIGhlaWdodD0iNjUiIHZpZXdCb3g9IjAgMCA2NSA2NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzIuNSIgY3k9IjMyLjUiIHI9IjMyLjUiIGZpbGw9IiNGRjZBMDAiLz4KPHN2ZyB4PSIxNSIgeT0iMTUiIHdpZHRoPSIzNSIgaGVpZ2h0PSIzNSIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjZmZmIj4KPHBhdGggZD0iTTEyIDEyYzIuMjEgMCA0LTEuNzkgNC00cy0xLjc5LTQtNC00LTQgMS43OS00IDQgMS43OSA0IDQgNHptMCAyYy0yLjY3IDAtOCAxLjM0LTggNHYyaDE2di0yYzAtMi42Ni01LjMzLTQtOC00eiIvPgo8L3N2Zz4KPC9zdmc+'">
                 
                 <div class="team-info">
                     <h3 class="team-name">${team.name}</h3>
@@ -83,6 +75,48 @@ class SalesDashboard {
                 </div>
             </div>
         `;
+    }
+
+    applyVGVGradients(maxVGV) {
+        const teamCards = document.querySelectorAll('.team-card');
+        
+        teamCards.forEach((card, index) => {
+            const vgv = parseInt(card.getAttribute('data-vgv'));
+            const percentage = (vgv / maxVGV) * 100;
+            
+            let gradientColor;
+            
+            if (index === 0) {
+                // 1º lugar - Dourado
+                gradientColor = `linear-gradient(90deg, 
+                    rgba(255, 215, 0, ${0.15 + (percentage/100) * 0.15}) 0%, 
+                    rgba(255, 106, 0, ${0.08 + (percentage/100) * 0.1}) ${percentage}%, 
+                    rgba(255, 255, 255, 0.02) 100%)`;
+            } else if (index === 1) {
+                // 2º lugar - Prateado
+                gradientColor = `linear-gradient(90deg, 
+                    rgba(192, 192, 192, ${0.12 + (percentage/100) * 0.12}) 0%, 
+                    rgba(255, 106, 0, ${0.06 + (percentage/100) * 0.08}) ${percentage}%, 
+                    rgba(255, 255, 255, 0.02) 100%)`;
+            } else if (index === 2) {
+                // 3º lugar - Bronze
+                gradientColor = `linear-gradient(90deg, 
+                    rgba(205, 127, 50, ${0.12 + (percentage/100) * 0.12}) 0%, 
+                    rgba(255, 106, 0, ${0.06 + (percentage/100) * 0.08}) ${percentage}%, 
+                    rgba(255, 255, 255, 0.02) 100%)`;
+            } else {
+                // Outros - Laranja
+                gradientColor = `linear-gradient(90deg, 
+                    rgba(255, 106, 0, ${0.08 + (percentage/100) * 0.12}) 0%, 
+                    rgba(255, 106, 0, ${0.04 + (percentage/100) * 0.06}) ${percentage}%, 
+                    rgba(255, 255, 255, 0.02) 100%)`;
+            }
+            
+            // Aplica o gradiente com animação
+            setTimeout(() => {
+                card.style.background = gradientColor;
+            }, index * 200);
+        });
     }
 
     getPositionClass(position) {
@@ -101,56 +135,6 @@ class SalesDashboard {
             minimumFractionDigits: 0,
             maximumFractionDigits: 0
         }).format(value);
-    }
-
-    animateCardBackgrounds() {
-        const teamCards = document.querySelectorAll('.team-card');
-        
-        teamCards.forEach((card, index) => {
-            const fillPercentage = card.getAttribute('data-fill');
-            
-            // Stagger animation for visual appeal
-            setTimeout(() => {
-                // Anima o fundo do card (::before)
-                card.style.setProperty('--fill-width', fillPercentage + '%');
-                
-                // Aplica a animação via CSS custom property
-                const beforeElement = window.getComputedStyle(card, '::before');
-                card.style.setProperty('--fill-width', fillPercentage + '%');
-                
-                // Força a animação do ::before
-                requestAnimationFrame(() => {
-                    card.style.setProperty('--dynamic-width', fillPercentage + '%');
-                });
-                
-            }, index * 150);
-        });
-
-        // Aplica a largura dinamicamente
-        setTimeout(() => {
-            teamCards.forEach(card => {
-                const fillPercentage = card.getAttribute('data-fill');
-                card.style.setProperty('--fill-width', fillPercentage + '%');
-                
-                // Atualiza o ::before via JavaScript
-                const styleSheet = document.styleSheets[0];
-                const cardSelector = `.team-card[data-team="${card.dataset.team}"]::before`;
-                
-                // Remove regra anterior se existir
-                for (let i = styleSheet.cssRules.length - 1; i >= 0; i--) {
-                    if (styleSheet.cssRules[i].selectorText === cardSelector) {
-                        styleSheet.deleteRule(i);
-                    }
-                }
-                
-                // Adiciona nova regra
-                styleSheet.insertRule(`
-                    ${cardSelector} {
-                        width: ${fillPercentage}% !important;
-                    }
-                `, styleSheet.cssRules.length);
-            });
-        }, 500);
     }
 
     updateLastUpdatedTime() {
@@ -178,7 +162,6 @@ class SalesDashboard {
     }
 }
 
-// Initialize dashboard when page loads
 document.addEventListener('DOMContentLoaded', () => {
     new SalesDashboard();
 });
